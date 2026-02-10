@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lucas Palacios Alvero - Google Search</title>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
@@ -34,15 +34,15 @@
         
         .logo { width: 92px; margin-right: 30px; cursor: pointer; }
 
-        /* Tamaño ajustado: Intermedio */
         .search-bar {
             display: flex; align-items: center; border: 1px solid var(--google-border);
             border-radius: 24px; 
             padding: 12px 20px; 
             width: 690px; 
             box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            background: #fff;
         }
-        .search-bar input { border: none; outline: none; width: 100%; font-size: 16px; }
+        .search-bar input { border: none; outline: none; width: 100%; font-size: 16px; background: transparent; }
 
         /* --- NAV BAR --- */
         .nav-bar {
@@ -51,8 +51,12 @@
             padding-bottom: 0; gap: 18px;
             font-size: 14px; 
             color: var(--google-gray); font-family: 'Google Sans', arial, sans-serif;
+            overflow-x: auto; /* Permite scroll si es necesario en pantallas pequeñas */
+            scrollbar-width: none; /* Oculta scrollbar en Firefox */
         }
-        .nav-item { padding: 10px 4px; cursor: pointer; display: flex; align-items: center; }
+        .nav-bar::-webkit-scrollbar { display: none; } /* Oculta scrollbar en Chrome/Safari */
+
+        .nav-item { padding: 10px 4px; cursor: pointer; display: flex; align-items: center; white-space: nowrap; flex-shrink: 0; }
         .nav-item:hover { color: #1a0dab; }
         .nav-item.active { color: #1f1f1f; border-bottom: 3px solid #1f1f1f; font-weight: 500; }
         .nav-item.ai-mode {
@@ -66,6 +70,7 @@
             margin-left: 120px; 
             padding-top: 25px; 
             gap: 60px; 
+            padding-bottom: 40px;
         }
         
         main { 
@@ -88,12 +93,16 @@
             display: flex; align-items: center; font-family: 'Google Sans', arial, sans-serif;
             font-weight: 500; font-size: 15px; color: #1f1f1f; margin-bottom: 12px;
         }
-        .sparkle-icon { width: 24px; height: 24px; margin-right: 10px; }
+        .ai-header img { width: 24px; height: 24px; margin-right: 10px; }
         
         .ai-text { font-size: 16px; line-height: 1.6; color: #3c4043; margin-bottom: 16px; }
         .ai-list { margin: 0; padding-left: 20px; font-size: 16px; line-height: 1.6; color: #3c4043; }
         .ai-list li { margin-bottom: 8px; }
         
+        .highlighted-text {
+            background-color: #4285f4; color: white; padding: 2px 4px; border-radius: 4px;
+        }
+
         .ai-footer { margin-top: 20px; display: flex; justify-content: center; }
         .show-more-btn {
             background: #f1f3f4; border: none; border-radius: 100px; padding: 10px 24px;
@@ -128,21 +137,21 @@
         .result-header { display: flex; align-items: center; margin-bottom: 8px; }
         .favicon { 
             width: 30px; height: 30px; background: #f1f3f4; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; margin-right: 12px;
+            display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0;
         }
         .favicon img { width: 18px; height: 18px; object-fit: contain; }
         
         .site-name { font-size: 14px; color: var(--google-title); font-weight: 400; line-height: 1.3; }
-        .site-url { font-size: 12px; color: var(--google-gray); line-height: 1.3; }
+        .site-url { font-size: 12px; color: var(--google-gray); line-height: 1.3; word-break: break-all; }
         
         .result-title { 
-            font-size: 22px; 
+            font-size: 20px; /* Un poco más pequeño en móvil */
             color: var(--google-blue); text-decoration: none; display: block; margin-top: 5px; 
         }
         .result-title:hover { text-decoration: underline; }
         .snippet { font-size: 15px; line-height: 1.6; color: #4d5156; margin-top: 10px; }
 
-        /* --- FICHA LATERAL --- */
+        /* --- FICHA LATERAL (Knowledge Panel) --- */
         .local-panel {
             width: 410px; 
             border: 1px solid var(--google-border); border-radius: 8px;
@@ -150,61 +159,60 @@
             font-family: 'Roboto', arial, sans-serif;
             background: white;
         }
-        .local-thumb-header { 
-            width: 100%; height: 300px; 
-            overflow: hidden; background: #f1f3f4; 
-        }
+        .local-thumb-header { width: 100%; height: 300px; overflow: hidden; background: #f1f3f4; }
         .local-thumb-header img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
         
         .local-content { padding: 16px; }
         .kp-title { font-size: 28px; font-family: 'Google Sans', sans-serif; margin: 0 0 5px 0; font-weight: 400; line-height: 1.2; }
         .kp-subtitle { font-size: 15px; color: #5f6368; margin-bottom: 8px; }
         
-        .kp-rating { display: flex; align-items: center; font-size: 14px; margin-bottom: 16px; }
+        .kp-rating { display: flex; align-items: center; font-size: 14px; margin-bottom: 16px; flex-wrap: wrap; }
         .kp-score { font-weight: bold; margin-right: 5px; }
         .kp-stars { color: #fbbc04; margin-right: 5px; }
         .kp-reviews { color: #5f6368; }
 
         /* BOTONES */
-        .kp-buttons-container {
-            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
-        }
+        .kp-buttons-container { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
         .kp-btn-pill {
             display: flex; align-items: center; gap: 6px;
-            background: #fff;
-            border: 1px solid #dadce0;
-            border-radius: 18px;
-            padding: 7px 16px;
-            font-family: 'Google Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--google-link-blue);
-            cursor: pointer;
-            transition: background 0.2s;
+            background: #fff; border: 1px solid #dadce0; border-radius: 18px; padding: 7px 16px;
+            font-family: 'Google Sans', sans-serif; font-size: 14px; font-weight: 500;
+            color: var(--google-link-blue); cursor: pointer; transition: background 0.2s;
         }
         .kp-btn-pill:hover { background: #f1f3f4; }
         .kp-btn-pill .material-symbols-outlined { font-size: 18px; color: var(--google-link-blue); }
         .kp-btn-pill.primary { background: var(--btn-pill-bg); border: none; color: var(--btn-pill-color); }
 
-        /* Detalles */
         .kp-details { margin-top: 15px; }
         .kp-info-row { font-size: 14px; line-height: 1.6; margin-bottom: 8px; color: #202124; }
         .kp-info-row strong { font-weight: bold; color: #202124; margin-right: 5px; }
-        
         .kp-link-blue { color: var(--google-link-blue); cursor: pointer; }
-        .kp-link-blue:hover { text-decoration: underline; }
-        
         .kp-hours-green { color: #188038; font-weight: bold; }
-
         .kp-footer-links { margin-top: 16px; font-size: 12px; color: #5f6368; border-top: 1px solid #eee; padding-top: 12px; }
-        .kp-footer-links a { color: #70757a; margin-right: 10px; display: inline-block; margin-bottom: 4px; }
-        .kp-footer-links a:hover { color: #202124; }
-        
         .kp-add-info { margin-top: 10px; font-size: 14px; font-weight: 500; }
         .kp-add-info a { color: var(--google-link-blue); display: flex; align-items: center; margin-bottom: 8px; text-decoration: none; }
-        .kp-add-info a:hover { text-decoration: underline; }
         .icon-plus { margin-right: 6px; font-size: 18px; line-height: 1; }
 
+        /* --- RESPONSIVE CSS (MÓVIL) --- */
+        @media only screen and (max-width: 800px) {
+            /* Header y Buscador */
+            .search-row { padding: 15px; flex-direction: row; gap: 10px; }
+            .logo { width: 35px; margin-right: 0; content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png'); } /* Cambio a logo "G" simple en móvil */
+            .search-bar { width: 100%; padding: 10px 15px; }
+            .nav-bar { margin-left: 0; padding-left: 15px; padding-right: 15px; width: 100%; box-sizing: border-box; }
+            
+            /* Layout general */
+            .container { flex-direction: column; margin-left: 0; padding: 15px; gap: 30px; }
+            main { max-width: 100%; }
+            
+            /* Ficha (Panel Local) */
+            .local-panel { width: 100%; position: static; box-sizing: border-box; }
+            
+            /* Ajustes de texto para móvil */
+            .result-title { font-size: 18px; }
+            .snippet { font-size: 14px; }
+            .ai-text, .ai-list { font-size: 14px; }
+        }
     </style>
 </head>
 <body>
@@ -233,19 +241,11 @@
         <div class="ai-container">
             <div class="ai-inner">
                 <div class="ai-header">
-                    <svg class="sparkle-icon" viewBox="0 0 24 24">
-                        <defs>
-                            <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#9b72cb;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <path fill="url(#aiGrad)" d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"></path>
-                    </svg>
+                    <img src="image_11.png" alt="AI Sparkle">
                     Vista creada con IA
                 </div>
                 <div class="ai-text">
-                    Chico de 23 años activo curioso y autodidacta. Amante del marketing y en concreto del posicionamiento orgánico. AI nativo con gran capacidad de prompteo. Siempre realizando mis propios proyectos de diversos sectores como la música, inmobiliaria y vino.
+                    Chico de 23 años activo curioso y autodidacta. <span class="highlighted-text">Amante del marketing y en concreto del posicionamiento orgánico.</span> AI nativo con gran capacidad de prompteo. Siempre realizando mis propios proyectos de diversos sectores como la música, inmobiliaria y vino.
                     <br><br>
                     <strong>Algunos de los ejemplos son:</strong>
                 </div>
@@ -343,7 +343,7 @@
 
     <aside class="local-panel">
         <div class="local-thumb-header">
-            <img src="https://alverocomercial.es/wp-content/uploads/2026/02/64EDF428-D504-4D88-B451-31A87DF96D22.jpeg" alt="Lucas Palacios Alvero">
+            <img src="image_0.png" alt="Lucas Palacios Alvero">
         </div>
         
         <div class="local-content">
