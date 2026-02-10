@@ -31,31 +31,21 @@
         }
 
         .search-row { display: flex; align-items: center; padding: 20px 30px 5px 30px; }
-        
         .logo { width: 92px; margin-right: 30px; cursor: pointer; }
 
         .search-bar {
             display: flex; align-items: center; border: 1px solid var(--google-border);
-            border-radius: 24px; 
-            padding: 12px 20px; 
-            width: 690px; 
-            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
-            background: #fff;
+            border-radius: 24px; padding: 12px 20px; width: 690px; 
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28); background: #fff;
         }
         .search-bar input { border: none; outline: none; width: 100%; font-size: 16px; background: transparent; }
 
-        /* --- NAV BAR --- */
         .nav-bar {
-            display: flex; align-items: center; 
-            margin-left: 152px; 
-            padding-bottom: 0; gap: 18px;
-            font-size: 14px; 
-            color: var(--google-gray); font-family: 'Google Sans', arial, sans-serif;
-            overflow-x: auto; /* Permite scroll si es necesario en pantallas pequeñas */
-            scrollbar-width: none; /* Oculta scrollbar en Firefox */
+            display: flex; align-items: center; margin-left: 152px; padding-bottom: 0; gap: 18px;
+            font-size: 14px; color: var(--google-gray); font-family: 'Google Sans', arial, sans-serif;
+            overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
         }
-        .nav-bar::-webkit-scrollbar { display: none; } /* Oculta scrollbar en Chrome/Safari */
-
+        .nav-bar::-webkit-scrollbar { display: none; }
         .nav-item { padding: 10px 4px; cursor: pointer; display: flex; align-items: center; white-space: nowrap; flex-shrink: 0; }
         .nav-item:hover { color: #1a0dab; }
         .nav-item.active { color: #1f1f1f; border-bottom: 3px solid #1f1f1f; font-weight: 500; }
@@ -64,18 +54,29 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;
         }
 
-        /* --- LAYOUT PRINCIPAL --- */
+        /* --- LAYOUT GRID SYSTEM (CLAVE PARA EL ORDEN) --- */
         .container { 
-            display: flex; 
+            display: grid;
+            /* Dos columnas: Contenido principal (flexible) y Ficha (410px) */
+            grid-template-columns: minmax(0, 700px) 410px; 
+            grid-template-rows: auto auto; /* Dos filas automáticas */
             margin-left: 120px; 
             padding-top: 25px; 
             gap: 60px; 
-            padding-bottom: 40px;
+            padding-bottom: 50px;
+            justify-content: start; /* Alineación a la izquierda */
         }
-        
-        main { 
-            max-width: 700px; 
-            width: 100%; 
+
+        /* Posicionamiento Desktop */
+        .ai-section { grid-column: 1 / 2; grid-row: 1 / 2; } /* Izquierda Arriba */
+        .results-section { grid-column: 1 / 2; grid-row: 2 / 3; } /* Izquierda Abajo */
+        .local-panel { 
+            grid-column: 2 / 3; 
+            grid-row: 1 / 3; /* Ocupa las dos filas a la derecha */
+            width: 410px; 
+            border: 1px solid var(--google-border); border-radius: 8px;
+            overflow: hidden; height: fit-content; position: sticky; top: 150px;
+            font-family: 'Roboto', arial, sans-serif; background: white;
         }
 
         /* --- AI OVERVIEW --- */
@@ -94,37 +95,22 @@
             font-weight: 500; font-size: 15px; color: #1f1f1f; margin-bottom: 12px;
         }
         .ai-header img { width: 24px; height: 24px; margin-right: 10px; }
-        
         .ai-text { font-size: 16px; line-height: 1.6; color: #3c4043; margin-bottom: 16px; }
         .ai-list { margin: 0; padding-left: 20px; font-size: 16px; line-height: 1.6; color: #3c4043; }
         .ai-list li { margin-bottom: 8px; }
-        
-        .highlighted-text {
-            background-color: #4285f4; color: white; padding: 2px 4px; border-radius: 4px;
-        }
-
+        .highlighted-text { background-color: #4285f4; color: white; padding: 2px 4px; border-radius: 4px; }
         .ai-footer { margin-top: 20px; display: flex; justify-content: center; }
         .show-more-btn {
             background: #f1f3f4; border: none; border-radius: 100px; padding: 10px 24px;
             font-size: 14px; font-weight: 500; color: #1f1f1f; cursor: pointer;
             display: flex; align-items: center; gap: 8px; width: 100%; justify-content: space-between;
         }
-        .arrow-down {
-            width: 12px; height: 12px; border: solid #5f6368; border-width: 0 2px 2px 0;
-            display: inline-block; padding: 3px; transform: rotate(45deg);
-        }
+        .arrow-down { width: 12px; height: 12px; border: solid #5f6368; border-width: 0 2px 2px 0; display: inline-block; padding: 3px; transform: rotate(45deg); }
 
-        /* --- PATROCINADOS --- */
-        .sponsored-label {
-            font-family: 'Google Sans', arial, sans-serif;
-            font-size: 15px; color: #202124; margin-bottom: 15px; font-weight: 500;
-        }
-        .sponsored-divider {
-            position: relative; text-align: center; margin-top: 10px; margin-bottom: 40px; height: 20px;
-        }
-        .divider-line {
-            position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background-color: #dfe1e5; z-index: 0;
-        }
+        /* --- PATROCINADOS & RESULTADOS --- */
+        .sponsored-label { font-family: 'Google Sans', arial, sans-serif; font-size: 15px; color: #202124; margin-bottom: 15px; font-weight: 500; }
+        .sponsored-divider { position: relative; text-align: center; margin-top: 10px; margin-bottom: 40px; height: 20px; }
+        .divider-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background-color: #dfe1e5; z-index: 0; }
         .divider-pill {
             position: relative; z-index: 1; background-color: #f1f3f4; color: #1f1f1f;
             display: inline-flex; align-items: center; padding: 6px 16px; border-radius: 18px;
@@ -132,51 +118,31 @@
         }
         .pill-icon { font-size: 14px; margin-left: 6px; font-weight: bold; transform: rotate(180deg); display:inline-block; }
 
-        /* --- RESULTADOS --- */
         .search-result { margin-bottom: 50px; }
         .result-header { display: flex; align-items: center; margin-bottom: 8px; }
-        .favicon { 
-            width: 30px; height: 30px; background: #f1f3f4; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0;
-        }
+        .favicon { width: 30px; height: 30px; background: #f1f3f4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0; }
         .favicon img { width: 18px; height: 18px; object-fit: contain; }
-        
         .site-name { font-size: 14px; color: var(--google-title); font-weight: 400; line-height: 1.3; }
         .site-url { font-size: 12px; color: var(--google-gray); line-height: 1.3; word-break: break-all; }
-        
-        .result-title { 
-            font-size: 20px; /* Un poco más pequeño en móvil */
-            color: var(--google-blue); text-decoration: none; display: block; margin-top: 5px; 
-        }
+        .result-title { font-size: 22px; color: var(--google-blue); text-decoration: none; display: block; margin-top: 5px; }
         .result-title:hover { text-decoration: underline; }
         .snippet { font-size: 15px; line-height: 1.6; color: #4d5156; margin-top: 10px; }
 
-        /* --- FICHA LATERAL (Knowledge Panel) --- */
-        .local-panel {
-            width: 410px; 
-            border: 1px solid var(--google-border); border-radius: 8px;
-            overflow: hidden; height: fit-content; position: sticky; top: 150px;
-            font-family: 'Roboto', arial, sans-serif;
-            background: white;
-        }
+        /* --- FICHA LATERAL --- */
         .local-thumb-header { width: 100%; height: 300px; overflow: hidden; background: #f1f3f4; }
         .local-thumb-header img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-        
         .local-content { padding: 16px; }
         .kp-title { font-size: 28px; font-family: 'Google Sans', sans-serif; margin: 0 0 5px 0; font-weight: 400; line-height: 1.2; }
         .kp-subtitle { font-size: 15px; color: #5f6368; margin-bottom: 8px; }
-        
         .kp-rating { display: flex; align-items: center; font-size: 14px; margin-bottom: 16px; flex-wrap: wrap; }
         .kp-score { font-weight: bold; margin-right: 5px; }
         .kp-stars { color: #fbbc04; margin-right: 5px; }
         .kp-reviews { color: #5f6368; }
 
-        /* BOTONES */
         .kp-buttons-container { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
         .kp-btn-pill {
-            display: flex; align-items: center; gap: 6px;
-            background: #fff; border: 1px solid #dadce0; border-radius: 18px; padding: 7px 16px;
-            font-family: 'Google Sans', sans-serif; font-size: 14px; font-weight: 500;
+            display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #dadce0; border-radius: 18px;
+            padding: 7px 16px; font-family: 'Google Sans', sans-serif; font-size: 14px; font-weight: 500;
             color: var(--google-link-blue); cursor: pointer; transition: background 0.2s;
         }
         .kp-btn-pill:hover { background: #f1f3f4; }
@@ -194,24 +160,32 @@
         .icon-plus { margin-right: 6px; font-size: 18px; line-height: 1; }
 
         /* --- RESPONSIVE CSS (MÓVIL) --- */
-        @media only screen and (max-width: 800px) {
-            /* Header y Buscador */
-            .search-row { padding: 15px; flex-direction: row; gap: 10px; }
-            .logo { width: 35px; margin-right: 0; content: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png'); } /* Cambio a logo "G" simple en móvil */
-            .search-bar { width: 100%; padding: 10px 15px; }
+        @media only screen and (max-width: 900px) {
+            /* 1. Header flexible */
+            .search-row { padding: 15px; flex-direction: row; gap: 10px; justify-content: space-between; }
+            .logo { width: 30px; margin-right: 0; } 
+            .search-bar { width: 100%; padding: 10px 15px; box-sizing: border-box; }
             .nav-bar { margin-left: 0; padding-left: 15px; padding-right: 15px; width: 100%; box-sizing: border-box; }
             
-            /* Layout general */
-            .container { flex-direction: column; margin-left: 0; padding: 15px; gap: 30px; }
-            main { max-width: 100%; }
+            /* 2. Layout Columna Única */
+            .container { 
+                display: flex; /* Cambiamos Grid por Flex */
+                flex-direction: column; 
+                margin-left: 0; padding: 15px; gap: 20px; width: 100%; box-sizing: border-box; 
+            }
             
-            /* Ficha (Panel Local) */
-            .local-panel { width: 100%; position: static; box-sizing: border-box; }
+            /* 3. ORDEN DE LOS ELEMENTOS (La magia) */
+            .ai-section { order: 1; }
+            .local-panel { 
+                order: 2; /* Ficha va en medio */
+                width: 100%; position: static; box-sizing: border-box; margin-bottom: 20px;
+            }
+            .results-section { order: 3; } /* Resultados al final */
             
-            /* Ajustes de texto para móvil */
-            .result-title { font-size: 18px; }
+            /* 4. Ajustes visuales */
+            .result-title { font-size: 20px; }
             .snippet { font-size: 14px; }
-            .ai-text, .ai-list { font-size: 14px; }
+            .ai-text, .ai-list { font-size: 15px; }
         }
     </style>
 </head>
@@ -237,7 +211,8 @@
 </div>
 
 <div class="container">
-    <main>
+    
+    <div class="ai-section">
         <div class="ai-container">
             <div class="ai-inner">
                 <div class="ai-header">
@@ -262,7 +237,70 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <aside class="local-panel">
+        <div class="local-thumb-header">
+            <img src="image_0.png" alt="Lucas Palacios Alvero">
+        </div>
+        
+        <div class="local-content">
+            <h2 class="kp-title">Lucas Palacios Alvero</h2>
+            <div class="kp-subtitle">SEO and SEM expert</div>
+            <div class="kp-rating">
+                <span class="kp-score">5,0</span>
+                <span class="kp-stars">★★★★★</span>
+                <span class="kp-reviews">(4.214 reseñas)</span>
+            </div>
+            
+            <div class="kp-buttons-container">
+                <div class="kp-btn-pill primary">
+                    <span class="material-symbols-outlined">directions</span> Cómo llegar
+                </div>
+                <div class="kp-btn-pill">
+                    <span class="material-symbols-outlined">reviews</span> Reseñas
+                </div>
+                <div class="kp-btn-pill">
+                    <span class="material-symbols-outlined">bookmark_border</span> Guardar
+                </div>
+                <div class="kp-btn-pill">
+                    <span class="material-symbols-outlined">share</span> Compartir
+                </div>
+                 <div class="kp-btn-pill">
+                    <span class="material-symbols-outlined">call</span> Llamar
+                </div>
+            </div>
+
+            <div class="kp-details">
+                <div class="kp-info-row">
+                    <strong>Se encuentra en:</strong> <span class="kp-link-blue">España</span>
+                </div>
+                <div class="kp-info-row">
+                    <strong>Dirección:</strong> <span class="kp-link-blue">Av. Zaragoza, 21, 26006 Logroño, La Rioja</span>
+                </div>
+                <div class="kp-info-row">
+                    <strong>Horario:</strong> <span class="kp-hours-green">24h Abierto</span>
+                </div>
+                <div class="kp-info-row">
+                    <strong>Teléfono:</strong> <span class="kp-link-blue">638113231</span>
+                </div>
+                <div class="kp-info-row">
+                    <strong>Provincia:</strong> La Rioja
+                </div>
+            </div>
+
+            <div class="kp-footer-links">
+                <a href="#">Sugerir un cambio</a> · <a href="#">¿Eres el propietario de esta empresa?</a>
+            </div>
+            
+            <div class="kp-add-info">
+                <a href="#"><span class="icon-plus">＋</span>Añadir información que falta</a>
+                <a href="#"><span class="icon-plus">＋</span>Añadir sitio web</a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="results-section">
         <div class="sponsored-label">Resultados patrocinados</div>
 
         <article class="search-result" style="margin-bottom: 15px;">
@@ -339,68 +377,8 @@
             <a href="#" class="result-title">Google Ads Certified - Estratega de no tocar</a>
             <p class="snippet">Puja por un clic barato pinchando en el título y descubriendo las campañas más exitosas del usuario que has buscado. Segun dice “Google ADS” no es lo mío, no puedo bichear.</p>
         </article>
-    </main>
+    </div>
 
-    <aside class="local-panel">
-        <div class="local-thumb-header">
-            <img src="image_0.png" alt="Lucas Palacios Alvero">
-        </div>
-        
-        <div class="local-content">
-            <h2 class="kp-title">Lucas Palacios Alvero</h2>
-            <div class="kp-subtitle">SEO and SEM expert</div>
-            <div class="kp-rating">
-                <span class="kp-score">5,0</span>
-                <span class="kp-stars">★★★★★</span>
-                <span class="kp-reviews">(4.214 reseñas)</span>
-            </div>
-            
-            <div class="kp-buttons-container">
-                <div class="kp-btn-pill primary">
-                    <span class="material-symbols-outlined">directions</span> Cómo llegar
-                </div>
-                <div class="kp-btn-pill">
-                    <span class="material-symbols-outlined">reviews</span> Reseñas
-                </div>
-                <div class="kp-btn-pill">
-                    <span class="material-symbols-outlined">bookmark_border</span> Guardar
-                </div>
-                <div class="kp-btn-pill">
-                    <span class="material-symbols-outlined">share</span> Compartir
-                </div>
-                 <div class="kp-btn-pill">
-                    <span class="material-symbols-outlined">call</span> Llamar
-                </div>
-            </div>
-
-            <div class="kp-details">
-                <div class="kp-info-row">
-                    <strong>Se encuentra en:</strong> <span class="kp-link-blue">España</span>
-                </div>
-                <div class="kp-info-row">
-                    <strong>Dirección:</strong> <span class="kp-link-blue">Av. Zaragoza, 21, 26006 Logroño, La Rioja</span>
-                </div>
-                <div class="kp-info-row">
-                    <strong>Horario:</strong> <span class="kp-hours-green">24h Abierto</span>
-                </div>
-                <div class="kp-info-row">
-                    <strong>Teléfono:</strong> <span class="kp-link-blue">638113231</span>
-                </div>
-                <div class="kp-info-row">
-                    <strong>Provincia:</strong> La Rioja
-                </div>
-            </div>
-
-            <div class="kp-footer-links">
-                <a href="#">Sugerir un cambio</a> · <a href="#">¿Eres el propietario de esta empresa?</a>
-            </div>
-            
-            <div class="kp-add-info">
-                <a href="#"><span class="icon-plus">＋</span>Añadir información que falta</a>
-                <a href="#"><span class="icon-plus">＋</span>Añadir sitio web</a>
-            </div>
-        </div>
-    </aside>
 </div>
 
 </body>
