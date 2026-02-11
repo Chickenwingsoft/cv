@@ -3,757 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucas Palacios Alvero - Google Search</title>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    
+    <title>Lucas Palacios Alvero ‹ Escritorio — WordPress</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --google-blue: #1a0dab;
-            --google-link-blue: #0b57d0;
-            --google-gray: #5f6368;
-            --google-border: #dfe1e5;
-            --google-bg: #ffffff;
-            --google-title: #202124;
-            --ai-bg: #f8f9fa;
-            --btn-pill-bg: #e8f0fe;
-            --btn-pill-color: #0b57d0;
+            --wp-admin-bg: #1d2327;
+            --wp-admin-text: #f0f0f1;
+            --wp-admin-hover-bg: #2c3338;
+            --wp-admin-hover-text: #72aee6;
+            --wp-admin-active-bg: #2271b1;
+            --wp-admin-body-bg: #f0f0f1;
+            --wp-bar-bg: #1d2327;
+            --wp-icon-gray: #a7aaad;
         }
 
-        body { font-family: 'arial', sans-serif; margin: 0; background: var(--google-bg); color: #202124; overflow-x: hidden; }
-        a { text-decoration: none; color: inherit; }
-
-        /* --- HEADER --- */
-        .header-container {
-            position: sticky; top: 0; background: white; z-index: 100;
-            border-bottom: 1px solid #ebebeb;
-            padding-bottom: 0;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            background: var(--wp-admin-body-bg);
         }
 
-        .search-row { display: flex; align-items: center; padding: 20px 30px 5px 30px; }
-        
-        .logo { width: 92px; margin-right: 30px; cursor: pointer; }
-
-        /* Tamaño ajustado: Intermedio */
-        .search-bar {
-            display: flex; align-items: center; border: 1px solid var(--google-border);
-            border-radius: 24px; 
-            padding: 12px 20px; 
-            width: 690px; 
-            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
-        }
-        .search-bar input { border: none; outline: none; width: 100%; font-size: 16px; }
-
-        /* --- NAV BAR --- */
-        .nav-bar {
-            display: flex; align-items: center; 
-            margin-left: 152px; 
-            padding-bottom: 0; gap: 18px;
-            font-size: 14px; 
-            color: var(--google-gray); font-family: 'Google Sans', arial, sans-serif;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .nav-bar::-webkit-scrollbar { display: none; }
-        .nav-bar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .nav-item { padding: 10px 4px; cursor: pointer; display: flex; align-items: center; white-space: nowrap; }
-        .nav-item:hover { color: #1a0dab; }
-        .nav-item.active { color: #1f1f1f; border-bottom: 3px solid #1f1f1f; font-weight: 500; }
-        .nav-item.ai-mode {
-            background: linear-gradient(90deg, #4285f4, #9b72cb, #d96570);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;
-        }
-
-        /* --- LAYOUT PRINCIPAL --- */
-        .container { 
-            display: flex; 
-            margin-left: 120px; 
-            padding-top: 25px; 
-            gap: 60px; 
-        }
-        
-        main { 
-            max-width: 700px; 
-            width: 100%; 
-        }
-
-        /* --- AI OVERVIEW --- */
-        .ai-container {
-            border-radius: 12px; padding: 2px;
-            background: linear-gradient(135deg, #fff 0%, #f0f7ff 100%);
-            margin-bottom: 40px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-            position: relative; overflow: hidden;
-        }
-        .ai-inner {
-            background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(240,244,249,0.5) 100%);
-            border-radius: 12px; padding: 20px;
-        }
-        .ai-header {
-            display: flex; align-items: center; font-family: 'Google Sans', arial, sans-serif;
-            font-weight: 500; font-size: 14px; color: #1f1f1f; margin-bottom: 12px;
-        }
-        .sparkle-icon { width: 20px; height: 20px; margin-right: 8px; }
-        
-        .ai-text { font-size: 14px; line-height: 1.58; color: #3c4043; margin-bottom: 16px; }
-        .ai-list { margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.58; color: #3c4043; }
-        .ai-list li { margin-bottom: 8px; }
-        
-        .ai-footer { margin-top: 20px; display: flex; justify-content: center; }
-        .show-more-btn {
-            background: #f8f9fa; border: 1px solid #dadce0; border-radius: 100px; padding: 10px 24px;
-            font-size: 14px; font-weight: 500; color: #1f1f1f; cursor: pointer;
-            display: flex; align-items: center; gap: 8px; width: 100%; justify-content: center;
-            transition: background 0.2s;
-        }
-        .show-more-btn:hover {
-            background: #f1f3f4;
-        }
-        .arrow-down {
-            width: 8px; height: 8px; border: solid #1f1f1f; border-width: 0 2px 2px 0;
-            display: inline-block; padding: 2px; transform: rotate(45deg);
-            margin-left: 8px;
-        }
-
-        /* --- PATROCINADOS --- */
-        .sponsored-label {
-            font-family: 'Google Sans', arial, sans-serif;
-            font-size: 15px; color: #202124; margin-bottom: 15px; font-weight: 500;
-        }
-        .sponsored-divider {
-            position: relative; text-align: center; margin-top: 10px; margin-bottom: 40px; height: 20px;
-        }
-        .divider-line {
-            position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background-color: #dfe1e5; z-index: 0;
-        }
-        .divider-pill {
-            position: relative; z-index: 1; background-color: #f1f3f4; color: #1f1f1f;
-            display: inline-flex; align-items: center; padding: 6px 16px; border-radius: 18px;
-            font-size: 12px; font-family: 'Google Sans', sans-serif; font-weight: 500; cursor: pointer;
-            border: none;
-            transition: background 0.2s;
-        }
-        .divider-pill:hover {
-            background-color: #e8eaed;
-        }
-        .pill-icon { font-size: 14px; margin-left: 6px; font-weight: bold; transform: rotate(180deg); display:inline-block; color: #1f1f1f; }
-
-        /* --- RESULTADOS --- */
-        .search-result { margin-bottom: 32px; }
-        .result-header { display: flex; align-items: center; margin-bottom: 4px; }
-        .favicon { 
-            width: 26px; height: 26px; background: #f1f3f4; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; margin-right: 12px;
-            flex-shrink: 0;
-        }
-        .favicon img { width: 16px; height: 16px; object-fit: contain; }
-        
-        .site-info { overflow: hidden; }
-        .site-name { font-size: 14px; color: var(--google-title); font-weight: 400; line-height: 1.3; display: block; }
-        .site-url { font-size: 12px; color: var(--google-gray); line-height: 1.3; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        
-        .result-title { 
-            font-size: 20px; 
-            color: var(--google-blue); text-decoration: none; display: block; margin-top: 0px; 
-            line-height: 1.3;
-            font-weight: 400;
-        }
-        .result-title:hover { text-decoration: underline; }
-        .snippet { font-size: 14px; line-height: 1.58; color: #4d5156; margin-top: 4px; }
-
-        /* --- FICHA LATERAL --- */
-        .local-panel {
-            width: 410px; 
-            border: 1px solid var(--google-border); border-radius: 8px;
-            overflow: hidden; height: fit-content; position: sticky; top: 150px;
-            font-family: 'Roboto', arial, sans-serif;
-            background: white;
-        }
-        .local-thumb-header { 
-            width: 100%; height: 300px; 
-            overflow: hidden; background: #f1f3f4; 
-        }
-        .local-thumb-header img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-        
-        .local-content { padding: 16px; }
-        .kp-title { font-size: 28px; font-family: 'Google Sans', sans-serif; margin: 0 0 5px 0; font-weight: 400; line-height: 1.2; }
-        .kp-subtitle { font-size: 15px; color: #5f6368; margin-bottom: 8px; }
-        
-        .kp-rating { display: flex; align-items: center; font-size: 14px; margin-bottom: 16px; flex-wrap: wrap; }
-        .kp-score { font-weight: bold; margin-right: 5px; }
-        .kp-stars { color: #fbbc04; margin-right: 5px; }
-        .kp-reviews { color: #5f6368; }
-
-        /* BOTONES */
-        .kp-buttons-container {
-            display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
-        }
-        .kp-btn-pill {
-            display: flex; align-items: center; gap: 6px;
-            background: #fff;
-            border: 1px solid #dadce0;
-            border-radius: 18px;
-            padding: 7px 16px;
-            font-family: 'Google Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--google-link-blue);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .kp-btn-pill:hover { background: #f1f3f4; }
-        .kp-btn-pill .material-symbols-outlined { font-size: 18px; color: var(--google-link-blue); }
-        .kp-btn-pill.primary { background: var(--btn-pill-bg); border: none; color: var(--btn-pill-color); }
-
-        /* Detalles */
-        .kp-details { margin-top: 15px; }
-        .kp-info-row { font-size: 14px; line-height: 1.6; margin-bottom: 8px; color: #202124; }
-        .kp-info-row strong { font-weight: bold; color: #202124; margin-right: 5px; }
-        
-        .kp-link-blue { color: var(--google-link-blue); cursor: pointer; }
-        .kp-link-blue:hover { text-decoration: underline; }
-        
-        .kp-hours-green { color: #188038; font-weight: bold; }
-
-        .kp-footer-links { margin-top: 16px; font-size: 12px; color: #5f6368; border-top: 1px solid #eee; padding-top: 12px; }
-        .kp-footer-links a { color: #70757a; margin-right: 10px; display: inline-block; margin-bottom: 4px; }
-        .kp-footer-links a:hover { color: #202124; }
-        
-        .kp-add-info { margin-top: 10px; font-size: 14px; font-weight: 500; }
-        .kp-add-info a { color: var(--google-link-blue); display: flex; align-items: center; margin-bottom: 8px; text-decoration: none; }
-        .kp-add-info a:hover { text-decoration: underline; }
-        .icon-plus { margin-right: 6px; font-size: 18px; line-height: 1; }
-
-        /* --- OTRAS PERSONAS TAMBIÉN BUSCARON --- */
-        .related-searches {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #ebebeb;
-            padding-bottom: 100px;
-        }
-        
-        .related-title {
-            font-family: arial, sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: #202124;
-            margin: 0 0 16px 0;
-        }
-        
-        .related-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-        }
-        
-        .related-item {
+        /* BARRA SUPERIOR */
+        #wpadminbar {
+            height: 32px;
+            background: var(--wp-bar-bg);
+            color: #c3c4c7;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            background: #f8f9fa;
-            border: 1px solid #f8f9fa;
-            border-radius: 8px;
+            align-items: center; 
+            padding: 0; 
+            font-size: 13px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+            box-sizing: border-box;
+        }
+
+        .ab-item {
+            display: flex;
+            align-items: center; 
+            height: 32px;
+            padding: 0 10px;
+            cursor: pointer;
+            color: #c3c4c7;
             text-decoration: none;
-            color: #202124;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.15s;
-            cursor: pointer;
         }
-        
-        .related-item:hover {
-            background: #ffffff;
-            border-color: #dadce0;
-            box-shadow: 0 1px 6px rgba(32,33,36,0.1);
+
+        .ab-item:hover { background: #2c3338; color: #72aee6; }
+        .ab-first-item { padding-left: 10px; }
+
+        .wp-logo {
+            font-size: 18px; 
+            margin-right: 15px;
+            color: var(--wp-icon-gray);
+            display: flex;
+            align-items: center; 
         }
-        
-        .search-icon {
+
+        .lang-group {
             display: flex;
             align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            margin-left: 5px;
+            border-left: 1px solid #3c434a;
         }
-        
-        .search-icon svg {
-            display: block;
+
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+            font-size: 11px;
         }
-        
-        .related-text {
-            flex: 1;
+
+        .flag { width: 16px; height: 11px; object-fit: cover; }
+
+        .user-greeting { margin-left: auto; display: flex; align-items: center; }
+
+        /* MENÚ LATERAL */
+        #adminmenuwrap {
+            width: 160px;
+            background-color: var(--wp-admin-bg);
+            min-height: 100vh;
+            margin-top: 32px;
+            position: fixed;
+            left: 0;
+            z-index: 9990;
+        }
+
+        .wp-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            height: 34px;
+            color: var(--wp-admin-text);
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .wp-menu-item.active { background-color: var(--wp-admin-active-bg); color: #fff; }
+
+        .wp-menu-item i {
+            width: 20px;
+            margin-right: 8px;
+            text-align: center;
+            color: var(--wp-icon-gray);
+            font-size: 17px;
+        }
+
+        .separator { height: 1px; background: #3c434a; margin: 8px 0; }
+
+        /* ÁREA DE CONTENIDO */
+        #wpcontent {
+            margin-left: 160px;
+            padding: 52px 20px 20px 20px;
+        }
+
+        h1 {
+            font-size: 23px;
+            font-weight: 400;
+            margin: 0 0 20px;
+            color: #1d2327;
+        }
+
+        .dashboard-widgets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .postbox {
+            background: #fff;
+            border: 1px solid #c3c4c7;
+            box-shadow: 0 1px 1px rgba(0,0,0,.04);
+            width: 380px; 
+        }
+
+        .postbox-header {
+            padding: 12px 15px;
+            border-bottom: 1px solid #c3c4c7;
+            font-size: 14px;
+            font-weight: 600;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .inside {
+            padding: 15px;
+            line-height: 1.5;
+            font-size: 13px;
+            color: #2c3338;
+        }
+
+        .wp-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .wp-list-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f1;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .wp-list-item:last-child { border-bottom: none; }
+
+        .wp-list-item i {
+            margin-top: 3px;
             margin-right: 12px;
+            color: #2271b1;
+            width: 16px;
+            text-align: center;
         }
 
-        /* ============================================
-           RESPONSIVE DESIGN - MOBILE
-           ============================================ */
-        
-        @media screen and (max-width: 1024px) {
-            .container {
-                margin-left: 20px;
-                padding-right: 20px;
-                gap: 30px;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            /* Header ajustes */
-            .search-row {
-                padding: 12px 15px 5px 15px;
-            }
-            
-            .logo {
-                width: 75px;
-                margin-right: 15px;
-            }
-            
-            .search-bar {
-                width: 100%;
-                padding: 10px 15px;
-            }
-            
-            .search-bar input {
-                font-size: 14px;
-            }
-            
-            /* Nav bar móvil */
-            .nav-bar {
-                margin-left: 15px;
-                padding-right: 15px;
-                gap: 15px;
-            }
-            
-            .nav-item {
-                font-size: 13px;
-                padding: 8px 4px;
-            }
-            
-            /* Contenedor principal en columna */
-            .container {
-                flex-direction: column;
-                margin-left: 0;
-                padding: 15px;
-                gap: 25px;
-            }
-            
-            main {
-                max-width: 100%;
-            }
-            
-            /* Panel lateral va abajo en móvil */
-            .local-panel {
-                width: 100%;
-                position: static;
-                order: -1; /* Lo coloca primero */
-            }
-            
-            .local-thumb-header {
-                height: 250px;
-            }
-            
-            .kp-title {
-                font-size: 24px;
-            }
-            
-            /* AI Overview */
-            .ai-container {
-                margin-bottom: 30px;
-            }
-            
-            .ai-inner {
-                padding: 16px;
-            }
-            
-            .ai-text {
-                font-size: 15px;
-            }
-            
-            .ai-list {
-                font-size: 15px;
-                padding-left: 18px;
-            }
-            
-            /* Resultados */
-            .search-result {
-                margin-bottom: 28px;
-            }
-            
-            .result-title {
-                font-size: 18px;
-            }
-            
-            .snippet {
-                font-size: 14px;
-            }
-            
-            .sponsored-label {
-                font-size: 14px;
-            }
-            
-            /* Botones del panel */
-            .kp-buttons-container {
-                gap: 6px;
-            }
-            
-            .kp-btn-pill {
-                font-size: 13px;
-                padding: 6px 12px;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            /* Ajustes extra para móviles pequeños */
-            .search-row {
-                padding: 10px 12px 5px 12px;
-            }
-            
-            .logo {
-                width: 65px;
-                margin-right: 12px;
-            }
-            
-            .search-bar {
-                padding: 8px 12px;
-                border-radius: 20px;
-            }
-            
-            .nav-bar {
-                margin-left: 12px;
-                gap: 12px;
-            }
-            
-            .nav-item {
-                font-size: 12px;
-            }
-            
-            .container {
-                padding: 12px;
-            }
-            
-            .local-thumb-header {
-                height: 220px;
-            }
-            
-            .kp-title {
-                font-size: 22px;
-            }
-            
-            .kp-subtitle {
-                font-size: 14px;
-            }
-            
-            .kp-rating {
-                font-size: 13px;
-            }
-            
-            .result-title {
-                font-size: 16px;
-            }
-            
-            .snippet {
-                font-size: 13px;
-            }
-            
-            .ai-inner {
-                padding: 14px;
-            }
-            
-            .ai-text,
-            .ai-list {
-                font-size: 14px;
-            }
-            
-            .kp-info-row {
-                font-size: 13px;
-            }
-            
-            /* Botones más compactos en móvil pequeño */
-            .kp-btn-pill {
-                font-size: 12px;
-                padding: 5px 10px;
-            }
-            
-            .kp-btn-pill .material-symbols-outlined {
-                font-size: 16px;
-            }
-            
-            .show-more-btn {
-                font-size: 13px;
-                padding: 8px 18px;
-            }
-            
-            .divider-pill {
-                font-size: 11px;
-                padding: 5px 12px;
-            }
-            
-            /* Búsquedas relacionadas en móvil */
-            .related-searches {
-                margin-top: 30px;
-                padding-top: 20px;
-            }
-            
-            .related-title {
-                font-size: 18px;
-            }
-            
-            .related-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            
-            .related-item {
-                padding: 10px 14px;
-                font-size: 13px;
-            }
-            
-            .search-icon {
-                font-size: 14px;
-                margin-right: 8px;
-            }
-            
-            /* Búsquedas relacionadas en móvil */
-            .related-searches {
-                padding-bottom: 60px;
-            }
-        }
-
+        .highlight { font-weight: 600; color: #2271b1; }
     </style>
 </head>
 <body>
 
-<div class="header-container">
-    <div class="search-row">
-        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" class="logo" alt="Google">
-        <div class="search-bar"><input type="text" value="Lucas Palacios Alvero"></div>
-    </div>
-    
-    <div class="nav-bar">
-        <div class="nav-item ai-mode">Modo IA</div>
-        <div class="nav-item active">Todo</div>
-        <div class="nav-item">Imágenes</div>
-        <div class="nav-item">Noticias</div>
-        <div class="nav-item">Vídeos</div>
-        <div class="nav-item">Productos</div>
-        <div class="nav-item">Vídeos cortos</div>
-        <div class="nav-item">Más</div>
-        <div class="nav-item">Herramientas</div>
-    </div>
-</div>
-
-<div class="container">
-    <main>
-        <div class="ai-container">
-            <div class="ai-inner">
-                <div class="ai-header">
-                    <svg class="sparkle-icon" viewBox="0 0 24 24">
-                        <defs>
-                            <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#9b72cb;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <path fill="url(#aiGrad)" d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"></path>
-                    </svg>
-                    Vista creada con IA
-                </div>
-                <div class="ai-text">
-                    Chico de 23 años activo curioso y autodidacta. Amante del marketing y en concreto del posicionamiento orgánico. AI nativo con gran capacidad de prompteo. Siempre realizando mis propios proyectos de diversos sectores como la música, inmobiliaria y vino.
-                    <br><br>
-                    <strong>Algunos de los ejemplos son:</strong>
-                </div>
-                <ul class="ai-list">
-                    <li>Formalización de 3 fiestas en Logroño con más de 300 personas.</li>
-                    <li>Edición y visualización de vídeos en final cut pro, capcut y más</li>
-                    <li>Marketing completo a la página web de un apartamento de alquiler</li>
-                </ul>
-                <div class="ai-footer">
-                    <button class="show-more-btn">
-                        Mostrar más
-                        <span class="arrow-down"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="sponsored-label">Resultados patrocinados</div>
-
-        <article class="search-result" style="margin-bottom: 15px;">
-            <div class="result-header">
-                <div class="favicon">
-                    <img src="https://alverocomercial.es/wp-content/uploads/2026/02/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjk4Mi1kMy0xMC5wbmc.webp" alt="LinkedIn">
-                </div>
-                <div class="site-info">
-                    <span class="site-name">LinkedIn</span>
-                    <span class="site-url">https://es.linkedin.com › lucas-palacios-alvero</span>
-                </div>
-            </div>
-            <a href="https://www.linkedin.com/in/lucas-palacios-alvero-5789802ab/" class="result-title" target="_blank">Lucas Palacios Alvero - Especialista en Marketing Digital</a>
-            <p class="snippet">Perfil profesional enfocado en estrategias de <b>marketing</b> basadas en datos. Experto en optimización de campañas y gestión de activos digitales para empresas de alto rendimiento.</p>
-        </article>
-
-        <div class="sponsored-divider">
-            <div class="divider-line"></div>
-            <div class="divider-pill">
-                Ocultar resultados patrocinados <span class="pill-icon">^</span>
-            </div>
-        </div>
-
-        <article class="search-result">
-            <div class="result-header">
-                <div class="favicon">
-                    <img src="https://alverocomercial.es/wp-content/uploads/2026/02/google_analytics_image_logo_icon_168152.png" alt="GA4">
-                </div>
-                <div class="site-info">
-                    <span class="site-name">Google Analytics</span>
-                    <span class="site-url">https://analytics.google.com › Ciclo de Vida › Lucas</span>
-                </div>
-            </div>
-            <a href="ga4.html" class="result-title">Google Analytics 4 - (Informe de Ciclo de Vida)</a>
-            <p class="snippet">Simulación interactiva de la vida de Lucas Palacios. Descubre los pasos que ha seguido para llegar hasta aquí. Incluye métricas desde el nacimiento, eventos significativos de su vida y evolución profesional desde 2002 hasta 2026.</p>
-        </article>
-
-        <article class="search-result">
-            <div class="result-header">
-                <div class="favicon">
-                    <img src="https://alverocomercial.es/wp-content/uploads/2026/02/174881.png" alt="WordPress">
-                </div>
-                <div class="site-info">
-                    <span class="site-name">WordPress Development</span>
-                    <span class="site-url">https://lucaspalacios.pro › wp-admin › El Bicheo</span>
-                </div>
-            </div>
-            <a href="#" class="result-title">Diseño y Desarrollo Web WordPress - Herramientas</a>
-            <p class="snippet">La plataforma favorita de Lucas para bichear, romper y resolver. Creación de páginas con técnicas variadas y utilización principal de plugins para salir del paso. Descubre sus herramientas más utilizadas para la gestión de webs.</p>
-        </article>
-
-        <article class="search-result">
-            <div class="result-header">
-                <div class="favicon"><img src="https://www.gstatic.com/images/branding/product/1x/search_console_24dp.png" alt="Search Console"></div>
-                <div class="site-info">
-                    <span class="site-name">Google Search Console</span>
-                    <span class="site-url">https://search.google.com › console › lucas-palacios</span>
-                </div>
-            </div>
-            <a href="#" class="result-title">Rendimiento en Google Search - SEO y ¿GEO?</a>
-            <p class="snippet">Análisis detallado de páginas y webs con mayor éxito creadas por el usuario que envió este CV. Descubre por qué le gusta tanto el SEO y por qué piensa que la aparición de la IA es una oportunidad infinita.</p>
-        </article>
-
-        <article class="search-result">
-            <div class="result-header">
-                <div class="favicon">
-                    <img src="https://alverocomercial.es/wp-content/uploads/2026/02/google-ads-icon-logo-symbol-free-png.webp" alt="Ads">
-                </div>
-                <div class="site-info">
-                    <span class="site-name">Google Ads</span>
-                    <span class="site-url">https://ads.google.com › Dashboard › CPC barato ahora mismo</span>
-                </div>
-            </div>
-            <a href="#" class="result-title">Google Ads Certified - Estratega de no tocar</a>
-            <p class="snippet">Puja por un clic barato pinchando en el título y descubriendo las campañas más exitosas del usuario que has buscado. Segun dice "Google ADS" no es lo mío, no puedo bichear.</p>
-        </article>
-
-        <!-- OTRAS PERSONAS TAMBIÉN BUSCARON -->
-        <div class="related-searches">
-            <h3 class="related-title">Otras personas también buscaron</h3>
-            <div class="related-grid">
-                <a href="#" class="related-item">
-                    <span class="related-text">Kawasaki r4c Cup</span>
-                    <span class="search-icon">
-                        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                            <path fill="#70757a" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                        </svg>
-                    </span>
-                </a>
-                <a href="#" class="related-item">
-                    <span class="related-text">Lucas Palacios SEO</span>
-                    <span class="search-icon">
-                        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                            <path fill="#70757a" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                        </svg>
-                    </span>
-                </a>
-                <a href="#" class="related-item">
-                    <span class="related-text">Australia Lucas Palacios</span>
-                    <span class="search-icon">
-                        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                            <path fill="#70757a" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                        </svg>
-                    </span>
-                </a>
-                <a href="#" class="related-item">
-                    <span class="related-text">Música y conciertos lucas</span>
-                    <span class="search-icon">
-                        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-                            <path fill="#70757a" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                        </svg>
-                    </span>
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <aside class="local-panel">
-        <div class="local-thumb-header">
-            <img src="https://alverocomercial.es/wp-content/uploads/2026/02/64EDF428-D504-4D88-B451-31A87DF96D22.jpeg" alt="Lucas Palacios Alvero">
+    <div id="wpadminbar">
+        <div class="ab-item ab-first-item">
+            <i class="fab fa-wordpress wp-logo"></i> 
+            <span style="font-weight: 600;">Lucas Palacios Alvero</span>
         </div>
         
-        <div class="local-content">
-            <h2 class="kp-title">Lucas Palacios Alvero</h2>
-            <div class="kp-subtitle">SEO and SEM expert</div>
-            <div class="kp-rating">
-                <span class="kp-score">5,0</span>
-                <span class="kp-stars">★★★★★</span>
-                <span class="kp-reviews">(4.214 reseñas)</span>
-            </div>
-            
-            <div class="kp-buttons-container">
-                <div class="kp-btn-pill primary">
-                    <span class="material-symbols-outlined">directions</span> Cómo llegar
-                </div>
-                <div class="kp-btn-pill">
-                    <span class="material-symbols-outlined">reviews</span> Reseñas
-                </div>
-                <div class="kp-btn-pill">
-                    <span class="material-symbols-outlined">bookmark_border</span> Guardar
-                </div>
-                <div class="kp-btn-pill">
-                    <span class="material-symbols-outlined">share</span> Compartir
-                </div>
-                 <div class="kp-btn-pill">
-                    <span class="material-symbols-outlined">call</span> Llamar
+        <div class="lang-group">
+            <div class="ab-item">
+                <div class="lang-selector">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg" class="flag"> ES
                 </div>
             </div>
-
-            <div class="kp-details">
-                <div class="kp-info-row">
-                    <strong>Se encuentra en:</strong> <span class="kp-link-blue">España</span>
-                </div>
-                <div class="kp-info-row">
-                    <strong>Dirección:</strong> <span class="kp-link-blue">Av. Zaragoza, 21, 26006 Logroño, La Rioja</span>
-                </div>
-                <div class="kp-info-row">
-                    <strong>Horario:</strong> <span class="kp-hours-green">24h Abierto</span>
-                </div>
-                <div class="kp-info-row">
-                    <strong>Teléfono:</strong> <span class="kp-link-blue">638113231</span>
-                </div>
-                <div class="kp-info-row">
-                    <strong>Provincia:</strong> La Rioja
+            <div class="ab-item">
+                <div class="lang-selector">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" class="flag"> EN
                 </div>
             </div>
-
-            <div class="kp-footer-links">
-                <a href="#">Sugerir un cambio</a> · <a href="#">¿Eres el propietario de esta empresa?</a>
-            </div>
-            
-            <div class="kp-add-info">
-                <a href="#"><span class="icon-plus">＋</span>Añadir información que falta</a>
-                <a href="#"><span class="icon-plus">＋</span>Añadir sitio web</a>
+            <div class="ab-item">
+                <div class="lang-selector">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" class="flag"> FR
+                </div>
             </div>
         </div>
-    </aside>
-</div>
+
+        <div class="user-greeting">
+            <div class="ab-item">
+                Hola, jefe <i class="fas fa-user-circle" style="margin-left:10px; font-size: 18px; color: var(--wp-icon-gray);"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminmenuwrap">
+        <div class="wp-menu-item active">
+            <i class="fas fa-tachometer-alt"></i>
+            <div class="wp-menu-name">Escritorio</div>
+        </div>
+        <div class="separator"></div>
+        <div class="wp-menu-item"><i class="fas fa-briefcase"></i> Experiencia</div>
+        <div class="wp-menu-item"><i class="fas fa-graduation-cap"></i> Educación</div>
+        <div class="wp-menu-item"><i class="fas fa-language"></i> Idiomas</div>
+        <div class="wp-menu-item"><i class="fas fa-comment-dots"></i> Recomendaciones</div>
+        <div class="separator"></div>
+        <div class="wp-menu-item"><i class="fab fa-google"></i> SEO</div>
+        <div class="wp-menu-item"><i class="fas fa-chart-line"></i> SEM</div>
+        <div class="wp-menu-item"><i class="fas fa-lightbulb"></i> Creativity</div>
+        <div class="wp-menu-item"><i class="fas fa-palette"></i> Canva</div>
+    </div>
+
+    <div id="wpcontent">
+        <h1>Escritorio de Marketing Digital</h1>
+        
+        <div class="dashboard-widgets">
+            
+            <div class="postbox">
+                <div class="postbox-header">
+                    <span>Plugins</span>
+                    <i class="fas fa-chevron-up" style="font-size: 12px; color: #646970;"></i>
+                </div>
+                <div class="inside">
+                    <ul class="wp-list">
+                        <li class="wp-list-item"><i class="fas fa-shopping-cart"></i> WooCommerce</li>
+                        <li class="wp-list-item"><i class="fas fa-store"></i> Prestashop</li>
+                        <li class="wp-list-item"><i class="fas fa-tools"></i> Divi Builder</li>
+                        <li class="wp-list-item"><i class="fas fa-cube"></i> Elementor</li>
+                        <li class="wp-list-item"><i class="fas fa-search"></i> Yoast SEO</li>
+                        <li class="wp-list-item"><i class="fas fa-envelope"></i> Contact Form 7</li>
+                        <li class="wp-list-item"><i class="fas fa-paper-plane"></i> WP Mail SMTP</li>
+                        <li class="wp-list-item"><i class="fas fa-comment"></i> Flamingo</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="postbox">
+                <div class="postbox-header">
+                    <span>Entradas / Blog</span>
+                    <i class="fas fa-chevron-up" style="font-size: 12px; color: #646970;"></i>
+                </div>
+                <div class="inside">
+                    <ul class="wp-list">
+                        <li class="wp-list-item">
+                            <i class="fas fa-robot"></i>
+                            <span>Automatización completa para SEO de blogs con <span class="highlight">Make</span> o <span class="highlight">scripts de PHP</span> generados por IA.</span>
+                        </li>
+                        <li class="wp-list-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Experiencia de más de <span class="highlight">3 años</span> creando y optimizando blogs para SEO.</span>
+                        </li>
+                        <li class="wp-list-item">
+                            <i class="fas fa-terminal"></i>
+                            <span>Propios <span class="highlight">prompts elaborados por mi</span> de creación de blogs con <span class="highlight">efectividad 100%</span>.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </body>
 </html>
